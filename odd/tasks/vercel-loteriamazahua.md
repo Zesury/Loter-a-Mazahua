@@ -33,7 +33,7 @@ publicada. No existe material de ayuda para quien juega por primera vez.
 - [x] T2. Crear `proyecto.html` (Sobre el proyecto + Instructivo) con estilos compartidos.
 - [x] T3. Agregar estilos de documento a `styles.css` y enlazar la página en `index.html`.
 - [x] T4. Agregar `vercel.json` y `.gitignore`.
-- [ ] T5. `git init`, commit inicial y push al repositorio de GitHub. (commit local listo; push bloqueado: la llave SSH no está autorizada en GitHub)
+- [x] T5. `git init`, commit inicial y push al repositorio de GitHub.
 - [x] T6. Instalar Vercel CLI, iniciar sesión y desplegar a producción como `loteriamazahua`.
 - [x] T7. Verificar la URL publicada (inicio y página de instructivo).
 
@@ -60,6 +60,6 @@ publicada. No existe material de ayuda para quien juega por primera vez.
 
 ## Estado
 
-Publicado en Vercel. Pendiente solo el push a GitHub (autorizar la llave SSH
-`id_ed25519`) y, opcionalmente, conectar el repo para despliegue automático.
+Publicado en Vercel y respaldado en GitHub. Repositorio conectado al proyecto de
+Vercel para despliegue automático en cada push a `main`.
 
