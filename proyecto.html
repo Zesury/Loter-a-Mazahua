@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#8f3a27">
+  <meta name="description" content="Sobre el proyecto Lotería Mazahua y el instructivo completo para jugar.">
+  <title>Sobre el proyecto e instructivo · Lotería Mazahua</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,900&family=Lilita+One&family=Nunito:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="icon" href="data:,">
+</head>
+<body class="doc">
+  <!-- Iconos reutilizables -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8" stroke="currentColor" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.4" r="1.2" fill="currentColor" stroke="none"/></g></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 016.5 2H20v17H6.5A2.5 2.5 0 004 21.5z"/><path d="M4 19.5V4.5M20 19v3H6.5"/></g></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.8 5.7 21.4l1.5-7.1L1.8 9.4 9 8.6z" fill="currentColor"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></g></symbol>
+    <symbol id="i-bean" viewBox="0 0 32 40"><path d="M16 2c7 0 13 5 13 12 0 4-3 6-3 9s3 5 3 8c0 5-5 7-10 7C9 38 3 32 3 22 3 11 8 2 16 2z" fill="currentColor"/></symbol>
+  </svg>
+
+  <header class="docTop">
+    <a class="wood red sq docBackBtn" href="/" aria-label="Volver al menú"><svg><use href="#i-back"/></svg></a>
+    <div class="sign wood red docSign">
+      <h1>Lotería</h1>
+      <p>Mazahua</p>
+    </div>
+  </header>
+
+  <main class="docWrap">
+    <nav class="docNav" aria-label="Secciones de esta página">
+      <a class="wood gold link" href="#proyecto"><svg><use href="#i-info"/></svg>Sobre el proyecto</a>
+      <a class="wood red link" href="#instructivo"><svg><use href="#i-book"/></svg>Instructivo</a>
+    </nav>
+
+    <!-- ===== Sobre el proyecto ===== -->
+    <section id="proyecto" class="docCard" aria-labelledby="t-proyecto">
+      <h2 id="t-proyecto">Sobre el proyecto</h2>
+      <p class="docLead">La Lotería Mazahua es una adaptación digital de la lotería tradicional mexicana,
+        pensada para jugar y aprender vocabulario mazahua al mismo tiempo.</p>
+
+      <p>El juego reúne <b>54 cartas</b> y <b>30 tableros</b>. Cada carta tiene su número,
+        su imagen, su nombre en español, su nombre en mazahua y audio en ambos idiomas.
+        La baraja completa y los tableros se pueden consultar desde el menú principal.</p>
+
+      <h3>Cómo funciona la partida</h3>
+      <p>Un lector con <b>ESP32</b> y tecnología RFID identifica la carta física que se canta y
+        envía la señal a la web. El estado de la partida se sincroniza en tiempo real con
+        <b>Supabase</b>, de modo que la carta que sale aparece al instante en todos los tableros
+        conectados. Si no hay lector disponible, la web incluye un <b>modo demo</b> para practicar.</p>
+
+      <h3>Por qué existe</h3>
+      <p>El objetivo es acercar el vocabulario mazahua a nuevas generaciones y a cualquier persona
+        que quiera aprenderlo, usando un juego que ya es parte de la cultura popular. Escuchar,
+        leer y repetir el nombre de cada carta refuerza el aprendizaje mientras se juega.</p>
+
+      <h3>Tecnología</h3>
+      <ul>
+        <li>Web estática con HTML, CSS y JavaScript, sin frameworks.</li>
+        <li>Supabase para el estado de la partida en vivo.</li>
+        <li>Audios en formato OGG en mazahua y en español.</li>
+        <li>Imágenes de las cartas en WebP y tableros en PNG.</li>
+        <li>Lector RFID con ESP32 como dispositivo de entrada.</li>
+      </ul>
+    </section>
+
+    <!-- ===== Instructivo ===== -->
+    <section id="instructivo" class="docCard" aria-labelledby="t-instructivo">
+      <h2 id="t-instructivo">Instructivo</h2>
+      <p class="docLead">Sigue estos pasos para jugar una partida completa, de principio a fin.</p>
+
+      <ol class="steps">
+        <li>
+          <b>Activa el sonido.</b> Al entrar, toca el botón <b>Activar sonido</b> (o cualquier parte
+          de la pantalla). Los navegadores bloquean el audio hasta que hay un primer toque.
+        </li>
+        <li>
+          <b>Espera la señal del lector.</b> El indicador de la esquina superior avisa cuando el
+          ESP32 está conectado. Si no tienes el lector, pulsa <b>Ver demo (sin ESP32)</b> para
+          practicar con un tablero de ejemplo.
+        </li>
+        <li>
+          <b>Pulsa Jugar.</b> La web te asigna un tablero de 4 × 4 cartas. El número del tablero
+          aparece en la barra superior.
+        </li>
+        <li>
+          <b>Escucha la carta que sale.</b> Verás su número, su imagen, su nombre en español y su
+          nombre en mazahua. El audio suena primero en mazahua. Usa los botones <b>Audio</b>
+          (repite en mazahua) y <b>Español</b> (dice el nombre en español).
+        </li>
+        <li>
+          <b>Marca tu tablero.</b> Si la carta está en tu tablero, tócala para ponerle un
+          <b>frijolito</b>. Tócala otra vez para quitarlo. El contador de la barra superior muestra
+          cuántas cartas llevas marcadas.
+        </li>
+        <li>
+          <b>Completa una línea.</b> Ganas cuando llenas una línea completa —horizontal, vertical
+          o diagonal— con cartas que <b>ya salieron</b>.
+        </li>
+        <li>
+          <b>Canta ¡Lotería!</b> Pulsa el botón <b>¡Lotería!</b> para validar. La web revisa contra
+          el servidor: si marcaste una carta que todavía no ha salido, te avisa y no valida la
+          victoria. Desmarca esa carta o espera a que aparezca.
+        </li>
+        <li>
+          <b>Consulta el historial.</b> El botón <b>Historial</b> muestra, en orden, todas las
+          cartas que ya salieron durante la partida.
+        </li>
+      </ol>
+
+      <h3>Botones del menú principal</h3>
+      <ul>
+        <li><b>Jugar:</b> inicia o retoma la partida.</li>
+        <li><b>Ver tableros:</b> muestra los 30 tableros del juego.</li>
+        <li><b>Álbum de cartas:</b> las 54 cartas; toca una para escucharla en mazahua.</li>
+        <li><b>Audio mazahua:</b> activa el sonido y repite la última carta.</li>
+        <li><b>Compartir:</b> envía el enlace del juego.</li>
+        <li><b>Cómo ganar:</b> resumen de las reglas.</li>
+        <li><b>Historial de cartas:</b> cartas que ya salieron.</li>
+        <li><b>Ajustes:</b> probar sonido y abrir el modo demo.</li>
+        <li><b>Quitar frijolitos:</b> limpia todas tus marcas del tablero.</li>
+      </ul>
+
+      <h3>Consejos</h3>
+      <ul>
+        <li>Sube el volumen o usa audífonos: el audio en mazahua es la pista principal.</li>
+        <li>Marca solo cuando estés seguro; puedes desmarcar tocando de nuevo la carta.</li>
+        <li>Si se corta la conexión, la página reintenta sola y retoma la partida.</li>
+        <li>En el modo demo las marcas se guardan solo en tu navegador y no se valida la Lotería.</li>
+      </ul>
+
+      <div class="tip">
+        <svg aria-hidden="true"><use href="#i-star"/></svg>
+        <p><b>Regla de oro:</b> una línea solo cuenta si todas sus cartas ya salieron.
+          Cantar Lotería con cartas que aún no aparecen no es válido.</p>
+      </div>
+    </section>
+
+    <div class="docBack">
+      <a class="wood red big link" href="/"><svg><use href="#i-play"/></svg>Volver a jugar</a>
+    </div>
+  </main>
+</body>
+</html>

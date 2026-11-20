@@ -1,0 +1,3 @@
+[build]
+command = "echo Publicando web estática"
+publish = "."

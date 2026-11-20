@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#8f3a27">
+  <title>Lotería Mazahua</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,900&family=Lilita+One&family=Nunito:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="icon" href="data:,">
+</head>
+<body class="view-menu">
+  <!-- Iconos reutilizables -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-bean" viewBox="0 0 32 40"><path d="M16 2c7 0 13 5 13 12 0 4-3 6-3 9s3 5 3 8c0 5-5 7-10 7C9 38 3 32 3 22 3 11 8 2 16 2z" fill="#8a3a2a"/><path d="M11 9c2-2 5-3 7-2" stroke="#c4705a" stroke-width="3" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><g fill="currentColor"><rect x="3" y="4" width="4" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="3" y="16" width="4" height="4" rx="1"/><rect x="9" y="5" width="12" height="2.4" rx="1.2"/><rect x="9" y="11" width="12" height="2.4" rx="1.2"/><rect x="9" y="17" width="12" height="2.4" rx="1.2"/></g></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.8 5.7 21.4l1.5-7.1L1.8 9.4 9 8.6z" fill="currentColor"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/></g><path d="M8.6 10.7l6.8-4M8.6 13.3l6.8 4" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 01-10 0zM5 4H2v2a4 4 0 004 4M19 4h3v2a4 4 0 01-4 4M10 14h4v3h-4zM7 20h10v-2H7z" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-podium" viewBox="0 0 24 24"><g fill="currentColor"><rect x="9" y="6" width="6" height="14" rx="1"/><rect x="2" y="11" width="6" height="9" rx="1"/><rect x="16" y="14" width="6" height="6" rx="1"/></g></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="3.4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke-linecap="round"/></g></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8" stroke="currentColor" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 016.5 2H20v17H6.5A2.5 2.5 0 004 21.5z"/><path d="M4 19.5V4.5M20 19v3H6.5"/></g></symbol>
+  </svg>
+
+  <!-- ===== Menú principal ===== -->
+  <section id="menu" class="screen menu">
+    <span id="connection" class="pill">Esperando al ESP32</span>
+
+    <div class="sign wood red">
+      <h1>Lotería</h1>
+      <p>Mazahua</p>
+    </div>
+    <p class="tagline">Ne chare · 54 cartas · 30 tableros</p>
+    <div class="diamonds" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i><i class="y"></i><i class="r"></i></div>
+
+    <nav class="menuBtns">
+      <button id="playBtn" type="button" class="wood red big"><svg><use href="#i-play"/></svg>Jugar</button>
+      <button id="galleryBtn" type="button" class="wood gold"><svg><use href="#i-list"/></svg>Ver tableros</button>
+      <button id="albumBtn" type="button" class="wood green"><svg><use href="#i-star"/></svg>Álbum de cartas</button>
+      <button id="audioBtn" type="button" class="wood brown"><svg><use href="#i-sound"/></svg>Audio mazahua</button>
+    </nav>
+
+    <a class="wood gold link aboutLink" href="/proyecto.html"><svg><use href="#i-book"/></svg>Sobre el proyecto e instructivo</a>
+
+    <div class="iconBar">
+      <button id="shareBtn" type="button" class="wood red sq" aria-label="Compartir"><svg><use href="#i-share"/></svg></button>
+      <button id="rulesBtn" type="button" class="wood gold sq" aria-label="Cómo ganar"><svg><use href="#i-trophy"/></svg></button>
+      <button id="historyMenuBtn" type="button" class="wood green sq" aria-label="Historial de cartas"><svg><use href="#i-podium"/></svg></button>
+      <button id="settingsBtn" type="button" class="wood red sq" aria-label="Ajustes"><svg><use href="#i-gear"/></svg></button>
+      <button id="clearBtn" type="button" class="wood gold sq" aria-label="Quitar mis frijolitos"><svg class="bean"><use href="#i-bean"/></svg></button>
+    </div>
+    <footer class="strip" aria-hidden="true"></footer>
+  </section>
+
+  <!-- ===== Esperando señal ===== -->
+  <section id="wait" class="screen" hidden>
+    <div class="topbar">
+      <button type="button" class="wood red sq backBtn" aria-label="Volver al menú"><svg><use href="#i-back"/></svg></button>
+      <h2 class="wood red plaque">Esperando</h2>
+    </div>
+    <div class="waitBox wood red">
+      <svg class="bean spin"><use href="#i-bean"/></svg>
+      <h2>Conectando con el ESP32…</h2>
+      <p>La partida aparece cuando el lector envía su señal.</p>
+      <button id="demoBtn" type="button" class="wood gold">Ver demo (sin ESP32)</button>
+    </div>
+  </section>
+
+  <!-- ===== Partida ===== -->
+  <section id="game" class="screen game" hidden>
+    <div class="topbar">
+      <button type="button" class="wood red sq backBtn" aria-label="Volver al menú"><svg><use href="#i-back"/></svg></button>
+      <h2 id="boardTitle" class="wood red plaque">Tablero</h2>
+      <span class="beanCount wood green" title="Frijolitos puestos"><svg class="bean"><use href="#i-bean"/></svg><b id="beanCount">0</b></span>
+    </div>
+
+    <article class="caller wood red">
+      <div class="cardFrame">
+        <div class="cardTop"><b id="currentNumber"></b><small id="cardMaz"></small></div>
+        <img id="currentImage" alt="">
+        <div class="cardName" id="cardName"></div>
+      </div>
+      <div class="info">
+        <h2 id="currentName"></h2>
+        <p id="currentMaz"></p>
+        <p id="progress"></p>
+        <div class="bar"><i id="progressBar"></i></div>
+      </div>
+    </article>
+
+    <section class="boardArea">
+      <div id="board" class="board"></div>
+      <span id="boardStatus" class="sr-only" aria-live="polite"></span>
+    </section>
+
+    <div class="actions">
+      <button id="playMaz" type="button" class="wood red"><svg><use href="#i-sound"/></svg>Audio</button>
+      <button id="playEs" type="button" class="wood gold"><svg><use href="#i-globe"/></svg>Español</button>
+      <button id="historyOpen" type="button" class="wood green"><svg><use href="#i-clock"/></svg>Historial</button>
+    </div>
+    <button id="win" type="button" class="wood gold big"><svg><use href="#i-star"/></svg>¡Lotería!</button>
+  </section>
+
+  <!-- ===== Paneles ===== -->
+  <aside id="historyPanel" class="sheet small" hidden>
+    <div class="sheetHead"><h3>Historial</h3><button type="button" class="wood red closeBtn">Cerrar</button></div>
+    <ol id="history"></ol>
+  </aside>
+
+  <aside id="galleryPanel" class="sheet" hidden>
+    <div class="sheetHead"><h3>Tableros (30)</h3><button id="galleryClose" type="button" class="wood red closeBtn">Cerrar</button></div>
+    <div id="galleryGrid" class="galleryGrid"></div>
+  </aside>
+
+  <aside id="albumPanel" class="sheet" hidden>
+    <div class="sheetHead"><h3>Álbum de cartas</h3><button type="button" class="wood red closeBtn">Cerrar</button></div>
+    <p class="sheetHint">Toca una carta para escucharla en mazahua.</p>
+    <div id="albumGrid" class="albumGrid"></div>
+  </aside>
+
+  <aside id="rulesPanel" class="sheet small" hidden>
+    <div class="sheetHead"><h3>Cómo ganar</h3><button type="button" class="wood red closeBtn">Cerrar</button></div>
+    <ol class="rules">
+      <li>Escucha la carta que sale en mazahua.</li>
+      <li>Si está en tu tablero, tócala para ponerle su frijolito.</li>
+      <li>Completa una línea (horizontal, vertical o diagonal) con cartas que ya salieron.</li>
+      <li>¡Toca <b>¡Lotería!</b> para que se valide!</li>
+    </ol>
+  </aside>
+
+  <aside id="settingsPanel" class="sheet small" hidden>
+    <div class="sheetHead"><h3>Ajustes</h3><button type="button" class="wood red closeBtn">Cerrar</button></div>
+    <div class="settingsList">
+      <button id="testSoundBtn" type="button" class="wood brown"><svg><use href="#i-sound"/></svg>Probar sonido</button>
+      <button id="demoBtn2" type="button" class="wood gold"><svg><use href="#i-play"/></svg>Ver demo (sin ESP32)</button>
+    </div>
+  </aside>
+
+  <button id="soundBtn" type="button" class="wood gold"><svg><use href="#i-sound"/></svg>Activar sonido</button>
+  <p id="notice" role="status" aria-live="polite"></p>
+
+  <script src="/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/app.js?v=15"></script>
+</body>
+</html>
