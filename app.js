@@ -17,7 +17,7 @@ const clientId = (() => {
 let cards = [], board = null, state = null, lastEventKey = null, loading = false, saveTimer = 0, noticeTimer = 0, demoMode = false;
 let currentId = null, view = "menu";   // view: "menu" | "play"
 
-// Muestra el menú o la partida (si aún no hay señal del ESP32, la pantalla de espera).
+// Muestra el menú o la partida (si aún no hay señal del Dispositivo, la pantalla de espera).
 function showView(next) {
   view = next || view;
   const ready = !!(state?.online && board);
@@ -156,7 +156,7 @@ function normalizeCard(card) {
   };
 }
 // Une las tablas del export de phpMyAdmin (tarjetas, imagenes, audios, nombres_mazahua) por numero_tarjeta.
-// El uid de las tarjetas RFID no se copia: la página no lo necesita.
+// El uid de las tarjetas no se copia: la página no lo necesita.
 function cardsFromExport(tables) {
   const data = name => (tables.find(t => t.type === "table" && t.name === name) || {}).data || [];
   const img = new Map(data("imagenes").map(r => [Number(r.numero_tarjeta), r.ruta]));
@@ -215,7 +215,7 @@ function setMarks(ids) {
 }
 async function saveMarks(claim) {
   if (demoMode) { setNotice("Modo demo: no se valida contra el servidor.", "warning"); return; }
-  if (!db) { setNotice("Sin conexión con Supabase.", "warning"); return; }
+  if (!db) { setNotice("Sin conexión con la nube.", "warning"); return; }
   clearTimeout(saveTimer);
   const result = await db.rpc("mazahua_update_board", {
     p_client: clientId,
@@ -259,7 +259,7 @@ function showCard(id, autoPlay) {
   else stopAudio();
 }
 function render() {
-  if (!demoMode) setConnection("ESP32 conectado", "online");
+  if (!demoMode) setConnection("Dispositivo conectado", "online");
   showView();
   $("boardTitle").textContent = "Tablero " + board.number;
   const events = state.events || [];
@@ -311,16 +311,16 @@ function tileParts(card, id) {
   return [image];
 }
 async function loadState() {
-  if (!db) { setConnection("Sin conexión con Supabase", "offline"); showView(); return; }
+  if (!db) { setConnection("Sin conexión con la nube", "offline"); showView(); return; }
   const result = await db.rpc("mazahua_public_state", { p_client: clientId });
   if (result.error) throw result.error;
   state = result.data;
   if (!state?.online) {
-    setConnection("Esperando señal del ESP32");
+    setConnection("Esperando señal del Dispositivo");
     showView();
     return;
   }
-  if (!board || board.gameKey !== state.gameId) {
+  if (!board || board.gameKey !== state.gameId || !state.player) {
     const assigned = await db.rpc("mazahua_board", { p_client: clientId });
     if (assigned.error) throw assigned.error;
     if (assigned.data?.waiting) return;
@@ -351,7 +351,7 @@ async function startDemo() {
     };
     const stored = localStorage.getItem("marks-demo-1");
     if (stored) { try { setMarks(JSON.parse(stored)); } catch (_) {} }
-    setConnection("Modo demo (sin ESP32)");
+    setConnection("Modo demo (sin Dispositivo)");
     lastEventKey = null;
     showView("play");
     render();
@@ -368,7 +368,7 @@ async function load() {
   loading = true;
   try { if (!cards.length) await loadCatalog(); await loadState(); }
   catch (error) {
-    setConnection("Sin conexión con Supabase", "offline");
+    setConnection("Sin conexión con la nube", "offline");
     setNotice("Reintentando: " + (error.message || "no se pudo actualizar el juego"), "warning");
   } finally { loading = false; }
 }
@@ -385,7 +385,7 @@ updateSoundButton();
 // Paneles: solo uno abierto a la vez; "Cerrar" y Esc los cierran
 const panels = ["historyPanel", "galleryPanel", "albumPanel", "rulesPanel", "settingsPanel"];
 function openPanel(id) { panels.forEach(p => { $(p).hidden = p !== id; }); }
-function closePanels() { panels.forEach(p => { $(p).hidden = true; }); }
+function closePanels() { panels.forEach(p => { $(p).hidden = true; }); const pv = $("cardPreview"); if (pv) pv.hidden = true; }
 document.querySelectorAll(".closeBtn").forEach(btn => { btn.onclick = closePanels; });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closePanels(); });
 
@@ -440,13 +440,31 @@ $("galleryBtn").onclick = () => {
       img.src = "/tableros/" + String(i).padStart(2, "0") + ".png";
       img.alt = "Tablero " + i;
       img.loading = "lazy";
-      grid.append(img);
+      const link = document.createElement("a");   // toca un tablero para abrirlo en grande
+      link.href = img.src; link.target = "_blank"; link.rel = "noopener"; link.title = "Abrir en grande";
+      link.append(img);
+      grid.append(link);
     }
   }
   openPanel("galleryPanel");
 };
 
-// Álbum: las 54 cartas; al tocar una suena en mazahua
+// Vista grande de una carta: así las palabras en mazahua de la imagen se leen bien
+function showPreview(card) {
+  let box = $("cardPreview");
+  if (!box) {
+    box = document.createElement("div");
+    box.id = "cardPreview";
+    box.innerHTML = "<img alt=''>";
+    box.onclick = () => { box.hidden = true; };
+    document.body.append(box);
+  }
+  box.firstChild.src = card.image;
+  box.firstChild.alt = card.name_es;
+  box.hidden = false;
+}
+
+// Álbum: las 54 cartas; al tocar una suena en mazahua y se ve en grande
 $("albumBtn").onclick = async () => {
   try { if (!cards.length) await loadCatalog(); }
   catch (e) { setNotice("No se pudo cargar el catálogo.", "warning"); return; }
@@ -458,7 +476,7 @@ $("albumBtn").onclick = async () => {
       button.className = "tile";
       button.setAttribute("aria-label", card.name_es + (card.name_mazahua ? ", " + card.name_mazahua : ""));
       button.append(...tileParts(card, card.id));
-      button.onclick = () => playCard(card, "maz");
+      button.onclick = () => { playCard(card, "maz"); showPreview(card); };
       return button;
     }));
   }

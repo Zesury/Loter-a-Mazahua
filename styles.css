@@ -53,7 +53,8 @@ button.wood.sq{width:52px;height:52px;padding:0;border-radius:16px;font-size:24p
 .screen{height:100dvh;width:100%;max-width:480px;margin:0 auto;padding:14px 16px calc(14px + env(safe-area-inset-bottom))}
 
 /* ---------- Menú ---------- */
-.menu{display:flex;flex-direction:column;align-items:center;gap:12px;overflow-y:auto;padding-bottom:0;background:linear-gradient(transparent,transparent)}
+.menu{display:flex;flex-direction:column;align-items:center;gap:12px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:0;background:linear-gradient(transparent,transparent)}
+.menu::-webkit-scrollbar{width:0;height:0}
 .pill{align-self:flex-end;display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:2px solid var(--redD);border-radius:99px;background:var(--cream);font-size:12px;color:var(--ink);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .pill:before{content:"";width:9px;height:9px;border-radius:50%;background:#c99a2e;flex:none}
 .pill.online:before{background:#4c9a3a}
@@ -94,10 +95,10 @@ button.wood.sq{width:52px;height:52px;padding:0;border-radius:16px;font-size:24p
 /* ---------- Partida ---------- */
 .game{display:flex;flex-direction:column;gap:12px}
 .caller{flex:none;display:flex;gap:14px;align-items:center;padding:12px;border-radius:24px}
-.cardFrame{flex:none;width:clamp(96px,28vw,128px);aspect-ratio:3/4;display:flex;flex-direction:column;padding:6px;border-radius:12px;background:var(--cream);outline:2px dashed var(--red);outline-offset:-5px;color:var(--ink);text-shadow:none;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.cardFrame{flex:none;width:clamp(112px,30vw,148px);aspect-ratio:3/4;display:flex;flex-direction:column;padding:6px;border-radius:12px;background:var(--cream);outline:2px dashed var(--red);outline-offset:-5px;color:var(--ink);text-shadow:none;box-shadow:0 3px 0 rgba(0,0,0,.25)}
 .cardTop{display:flex;justify-content:space-between;align-items:baseline;gap:4px;padding:3px 4px 0}
-.cardTop b{font:400 15px "Lilita One",sans-serif}
-.cardTop small{font-size:8px;font-weight:900;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cardTop b{font:400 22px "Lilita One",sans-serif}
+.cardTop small{font-size:13px;font-weight:900;line-height:1.05;text-align:right;text-transform:uppercase;white-space:normal;overflow-wrap:anywhere}
 .cardFrame img{flex:1;min-height:0;width:100%;object-fit:contain;margin:2px 0}
 .cardFrame img:not([src]),.cardFrame img[src=""]{visibility:hidden}
 .cardName{text-align:center;font:400 12px "Lilita One",sans-serif;color:var(--greenD);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-bottom:3px}
@@ -144,12 +145,13 @@ button.wood.sq{width:52px;height:52px;padding:0;border-radius:16px;font-size:24p
 #galleryPanel,#albumPanel{inset:8px;padding:10px 8px 8px}
 .galleryGrid{flex:1;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:6px;align-content:start}
 .galleryGrid img{display:block;width:100%;height:auto;border-radius:6px}
-.albumGrid{flex:1;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:5px;align-content:start;grid-auto-rows:max-content}
+.galleryGrid a{display:block;cursor:zoom-in}
+.albumGrid{flex:1;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px;align-content:start;grid-auto-rows:max-content}
 .albumGrid .tile{height:auto;aspect-ratio:605/1084}
 
 /* ---------- Avisos ---------- */
 #soundBtn{position:fixed;left:50%;top:74px;transform:translateX(-50%);white-space:nowrap;z-index:30;padding:8px 16px;font-size:15px;border-radius:99px;animation:pulse 1.6s ease-in-out infinite}
-body.view-menu #soundBtn{top:12px;left:16px;transform:none;padding:5px 12px;font-size:13px}
+body.view-menu #soundBtn{top:12px;left:max(12px,calc(50% - 240px + 16px));transform:none;padding:5px 12px;font-size:13px}
 body.view-menu #soundBtn:active{transform:translateY(4px)}
 @keyframes pulse{50%{box-shadow:0 5px 0 var(--wd),0 0 0 7px rgba(229,169,51,.35)}}
 #notice{position:fixed;left:12px;right:12px;bottom:12px;z-index:40;max-width:620px;margin:0 auto;padding:12px 14px;border-radius:16px;background:var(--cream);border:3px solid var(--goldD);box-shadow:0 4px 0 var(--goldD);font-size:14px;line-height:1.4;cursor:pointer}
@@ -171,17 +173,51 @@ body.view-menu #soundBtn:active{transform:translateY(4px)}
   #win.wood.big{padding:9px;font-size:20px}
 }
 
-/* ---------- Celulares bajitos ---------- */
-@media (max-height:700px){
-  .screen{padding-top:10px}
+/* ---------- Laptops y ventanas no muy altas: el menú entra sin scroll ---------- */
+@media (max-height:860px){
+  .menu{gap:9px}
+  .sign{margin-top:24px}
+  .tagline{font-size:13px}
+  .menuBtns{gap:12px;margin-top:6px}
+  .menuBtns #playBtn{padding:16px}
+  .iconBar{padding-top:12px}
+  .strip{height:24px;background-size:38px 24px}
+}
+
+/* ---------- Ventanas bajitas (laptop con barra de tareas y zoom) ---------- */
+@media (max-height:720px){
+  .screen{padding-top:8px;padding-bottom:8px}
+  .menu{gap:8px}
+  .menu .pill{margin-bottom:auto;font-size:11px;padding:4px 11px}
+  .menu .sign{margin-top:18px;padding:12px 12px 10px;border-radius:22px;width:min(100%,310px)}
+  .menu .sign:before,.menu .sign:after{top:-22px;height:22px}
+  .menu .sign h1{font-size:clamp(36px,9vh,56px)}
+  .menu .sign p{font-size:clamp(17px,4vh,24px)}
+  .menu .tagline{font-size:13px}
+  .menuBtns{gap:10px;margin-top:2px}
+  .menuBtns #playBtn{padding:clamp(10px,2vh,16px);font-size:clamp(19px,3.6vh,24px)}
+  #menu.menu a.wood.link.aboutLink{padding:10px 14px;font-size:17px}
+  #menu.menu a.wood.link.aboutLink svg{width:1.1em;height:1.1em}
+  .iconBar{padding-top:10px}
+  button.wood.sq{width:46px;height:46px;font-size:21px;border-radius:14px}
+  .strip{height:22px;background-size:34px 22px}
+  /* juego y demás pantallas en ventanas bajas */
   .game{gap:9px}
-  .menuBtns{gap:12px}
-  button.wood.big{font-size:21px;padding:12px}
-  .menuBtns #playBtn{padding:14px}
-  .sign{margin-top:22px}
   .cardFrame{width:clamp(84px,24vw,104px)}
   .actions button.wood{padding:8px 6px;font-size:14px}
   .board{--g:4px}
+}
+
+/* ---------- Ventanas muy bajas: máxima compresión sin scrollbar ---------- */
+@media (max-height:620px){
+  .menu{gap:6px}
+  .menu .sign{margin-top:14px;width:min(100%,280px)}
+  .menu .sign h1{font-size:clamp(30px,7vh,46px)}
+  .menu .tagline,.menu .diamonds{display:none}
+  .menuBtns{gap:8px}
+  #menu.menu a.wood.link.aboutLink{padding:8px 12px;font-size:16px}
+  button.wood.sq{width:42px;height:42px}
+  .strip{height:16px;background-size:26px 16px}
 }
 
 /* ---------- Pantallas grandes / proyector y celular horizontal ---------- */
@@ -211,11 +247,18 @@ body.view-menu #soundBtn:active{transform:translateY(4px)}
   .menu{max-width:520px}
 }
 
+/* Vista grande de una carta (álbum): las palabras en mazahua se leen bien */
+#cardPreview{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:14px;background:rgba(40,15,8,.82);cursor:zoom-out}
+#cardPreview[hidden]{display:none}
+#cardPreview img{max-width:min(92vw,560px);max-height:92dvh;width:auto;height:auto;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+
 /* =========================================================
    Página "Sobre el proyecto e instructivo"
    ========================================================= */
 html{scroll-behavior:smooth}
 body.doc{height:auto;min-height:100dvh;overflow:auto}
+#menu a.wood.link.aboutLink{width:100%;max-width:100%;margin-top:2px;padding:12px 18px;font:400 18px "Lilita One",sans-serif;text-transform:uppercase;border-radius:26px}
+#menu a.wood.link.aboutLink svg{width:1.15em;height:1.15em}
 a.wood{text-decoration:none}
 a.wood.link{display:flex;align-items:center;justify-content:center;gap:.5em;padding:10px 14px;font:400 15px "Lilita One",sans-serif;text-transform:uppercase;border-radius:99px;transition:transform .08s,box-shadow .08s}
 a.wood.link:hover{filter:brightness(1.06)}
@@ -245,4 +288,3 @@ a.wood.sq{display:flex;align-items:center;justify-content:center;width:46px;heig
 .tip svg{width:22px;height:22px;color:var(--goldD);margin-top:2px}
 .tip p{margin:0;font-size:14px}
 .docBack{display:flex;justify-content:center;padding-top:2px}
-.aboutLink{width:100%;border-radius:99px;margin-top:2px}

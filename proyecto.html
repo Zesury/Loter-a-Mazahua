@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,900&family=Lilita+One&family=Nunito:wght@700;800;900&display=swap">
-  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="stylesheet" href="/styles.css?v=17">
   <link rel="icon" href="data:,">
 </head>
 <body class="doc">
@@ -50,10 +50,11 @@
         La baraja completa y los tableros se pueden consultar desde el menú principal.</p>
 
       <h3>Cómo funciona la partida</h3>
-      <p>Un lector con <b>ESP32</b> y tecnología RFID identifica la carta física que se canta y
-        envía la señal a la web. El estado de la partida se sincroniza en tiempo real con
-        <b>Supabase</b>, de modo que la carta que sale aparece al instante en todos los tableros
-        conectados. Si no hay lector disponible, la web incluye un <b>modo demo</b> para practicar.</p>
+      <p>Un <b>Dispositivo</b> con un <b>lector</b> identifica la carta física que se canta y la
+        muestra al instante en la pantalla local. La partida puede jugarse <b>en local</b>, sin
+        internet, o <b>en línea</b>: cuando el Dispositivo se conecta a una red Wi-Fi con internet,
+        la carta que sale aparece también en los tableros de quienes juegan desde su casa. Si no
+        hay lector disponible, la web incluye un <b>modo demo</b> para practicar.</p>
 
       <h3>Por qué existe</h3>
       <p>El objetivo es acercar el vocabulario mazahua a nuevas generaciones y a cualquier persona
@@ -63,62 +64,103 @@
       <h3>Tecnología</h3>
       <ul>
         <li>Web estática con HTML, CSS y JavaScript, sin frameworks.</li>
-        <li>Supabase para el estado de la partida en vivo.</li>
+        <li>Estado de la partida en vivo, compartido a través de la Nube.</li>
         <li>Audios en formato OGG en mazahua y en español.</li>
         <li>Imágenes de las cartas en WebP y tableros en PNG.</li>
-        <li>Lector RFID con ESP32 como dispositivo de entrada.</li>
+        <li>Un lector de tarjetas como dispositivo de entrada.</li>
       </ul>
     </section>
 
     <!-- ===== Instructivo ===== -->
     <section id="instructivo" class="docCard" aria-labelledby="t-instructivo">
       <h2 id="t-instructivo">Instructivo</h2>
-      <p class="docLead">Sigue estos pasos para jugar una partida completa, de principio a fin.</p>
+      <p class="docLead">Hay dos formas de jugar: <b>en local</b>, sin internet, y <b>en línea</b>,
+        donde se suman jugadores desde su casa. Empieza por el modo local: es la base de los dos.</p>
 
+      <h3>Antes de empezar</h3>
+      <ul>
+        <li>Ten a mano un celular o una laptop, la baraja física y los tableros impresos.</li>
+        <li>Activa el sonido en la web: toca <b>Activar sonido</b> (o cualquier parte de la pantalla).
+          Los navegadores bloquean el audio hasta el primer toque.</li>
+      </ul>
+
+      <h3>Modo local (sin internet)</h3>
+      <p>Todo ocurre dentro del Dispositivo: no necesitas datos ni conexión a internet.</p>
       <ol class="steps">
-        <li>
-          <b>Activa el sonido.</b> Al entrar, toca el botón <b>Activar sonido</b> (o cualquier parte
-          de la pantalla). Los navegadores bloquean el audio hasta que hay un primer toque.
-        </li>
-        <li>
-          <b>Espera la señal del lector.</b> El indicador de la esquina superior avisa cuando el
-          ESP32 está conectado. Si no tienes el lector, pulsa <b>Ver demo (sin ESP32)</b> para
-          practicar con un tablero de ejemplo.
-        </li>
-        <li>
-          <b>Pulsa Jugar.</b> La web te asigna un tablero de 4 × 4 cartas. El número del tablero
-          aparece en la barra superior.
-        </li>
-        <li>
-          <b>Escucha la carta que sale.</b> Verás su número, su imagen, su nombre en español y su
-          nombre en mazahua. El audio suena primero en mazahua. Usa los botones <b>Audio</b>
-          (repite en mazahua) y <b>Español</b> (dice el nombre en español).
-        </li>
-        <li>
-          <b>Marca tu tablero.</b> Si la carta está en tu tablero, tócala para ponerle un
-          <b>frijolito</b>. Tócala otra vez para quitarlo. El contador de la barra superior muestra
-          cuántas cartas llevas marcadas.
-        </li>
-        <li>
-          <b>Completa una línea.</b> Ganas cuando llenas una línea completa —horizontal, vertical
-          o diagonal— con cartas que <b>ya salieron</b>.
-        </li>
-        <li>
-          <b>Canta ¡Lotería!</b> Pulsa el botón <b>¡Lotería!</b> para validar. La web revisa contra
-          el servidor: si marcaste una carta que todavía no ha salido, te avisa y no valida la
-          victoria. Desmarca esa carta o espera a que aparezca.
-        </li>
-        <li>
-          <b>Consulta el historial.</b> El botón <b>Historial</b> muestra, en orden, todas las
-          cartas que ya salieron durante la partida.
-        </li>
+        <li><b>Enciende el Dispositivo</b> y espera unos segundos a que termine de arrancar.</li>
+        <li><b>Conéctate a su Wi-Fi.</b> En el celular o la laptop abre los ajustes de Wi-Fi y elige la
+          red <b>Loteria-Mazahua</b>; la contraseña es <b>Mazahua2026</b>. Es normal que el sistema
+          avise que esa red «no tiene internet»: ignora el aviso y mantente conectado a ella.</li>
+        <li><b>Abre el navegador</b> y escribe en la barra de direcciones <b>192.168.4.1</b>.</li>
+        <li><b>Revisa los indicadores de arriba.</b> <b>Datos</b> y <b>Lector</b> deben verse en verde.
+          Si alguno está en rojo, revisa que la memoria de datos esté bien puesta y que el lector esté
+          conectado; después recarga la página.</li>
+        <li><b>Pulsa Empezar partida.</b> La pantalla carga el catálogo sola y avisa cuando está
+          «lista para comenzar»; ese es el momento de pulsar el botón.</li>
+        <li><b>Reparte los tableros</b> entre las personas que van a jugar. Cada tablero tiene 4 × 4
+          cartas y no se repiten entre jugadores.</li>
+        <li><b>Pasa las cartas por el lector.</b> Cada carta cantada aparece al instante en la pantalla
+          y suena primero en mazahua. Quien la tenga en su tablero le pone su frijolito.</li>
+        <li><b>Canta ¡Lotería!</b> al completar una línea y continúa como en la lotería tradicional.</li>
       </ol>
+      <div class="tip">
+        <svg aria-hidden="true"><use href="#i-star"/></svg>
+        <p><b>Sin lector:</b> si no tienes el lector a mano, abre la web y pulsa
+          <b>Ver demo (sin Dispositivo)</b> para practicar con un tablero de ejemplo. En el modo demo
+          las marcas se guardan solo en ese navegador y la Lotería no se valida.</p>
+      </div>
+
+      <h3>Modo en línea (local + internet)</h3>
+      <p>Es el mismo juego, pero el Dispositivo también se conecta a internet para que otras personas
+        jueguen desde su casa. El orden importa poco: puedes configurar la red antes o después de
+        empezar la partida.</p>
+      <ol class="steps">
+        <li><b>Completa el modo local</b> hasta ver <b>Datos</b> y <b>Lector</b> en verde.</li>
+        <li><b>Abre la configuración de red.</b> En la pantalla del Dispositivo está el botón
+          <b>Configurar conexión a internet</b> (antes de empezar) y el botón <b>Configurar red</b>
+          en la barra superior (durante la partida). Los dos abren el mismo panel.</li>
+        <li><b>Elige tu red Wi-Fi y escribe su contraseña.</b> Usa la red del lugar donde estés: el
+          Dispositivo se conecta a ella, no tu teléfono. Si no aparece en la lista, pulsa
+          <b>Buscar redes</b> o escribe el nombre a mano. Solo se detectan redes de <b>2.4 GHz</b>
+          (las de 5 GHz no se ven; si tu red está oculta, escribe su nombre). En el mismo panel
+          también puedes cambiar el nombre y la contraseña del Wi-Fi propio del Dispositivo; si los
+          cambias, vuelve a conectarte a esa red y abre otra vez <b>192.168.4.1</b>.</li>
+        <li><b>Pulsa Guardar y conectar.</b> El panel avisa que el Dispositivo intenta conectarse;
+          puede tardar unos segundos. Si la contraseña es incorrecta o la red es de 5 GHz, el panel
+          lo dice y puedes corregirlo ahí mismo.</li>
+        <li><b>Espera la confirmación.</b> Cuando el Dispositivo tenga internet, el panel muestra el
+          nombre de la red y avisa que está <b>esperando respuesta de la nube</b>. Deja el teléfono
+          conectado al Wi-Fi del Dispositivo; la pantalla local sigue funcionando por esa red.</li>
+        <li><b>Confirma los indicadores de la barra superior.</b> <b>Wi-Fi del Dispositivo</b> debe
+          mostrar el nombre de tu red y <b>Nube</b> debe decir <b>conectado</b>. Con eso, cierra el
+          panel y continúa la partida.</li>
+        <li><b>Comparte el enlace</b> <b>loteriamazahua.vercel.app</b> con quienes van a jugar en
+          línea.</li>
+      </ol>
+
+      <h3>Para quienes juegan desde su casa</h3>
+      <ol class="steps">
+        <li><b>Entra a loteriamazahua.vercel.app</b> y espera a que el Dispositivo aparezca como
+          conectado. Si aún no lo está, la página lo avisa y se actualiza sola.</li>
+        <li><b>Pulsa Jugar.</b> La web te asigna un tablero de 4 × 4 cartas al azar: no se elige, así
+          que cada persona recibe una combinación distinta.</li>
+        <li><b>Escucha y marca.</b> El audio suena en todos al mismo tiempo: es una sola partida
+          sincronizada. Toca una carta de tu tablero para ponerle su frijolito y tócala de nuevo para
+          quitarlo.</li>
+        <li><b>Llena tu tablero de verdad.</b> Al cantar ¡Lotería! la web revisa contra el servidor: si
+          marcaste cartas que todavía no han salido, te dice cuáles son y no valida la victoria.</li>
+      </ol>
+
+      <h3>Lo que ve el organizador</h3>
+      <p>En la pantalla local, la sección <b>Tableros digitales</b> muestra cuántos jugadores en línea
+        están conectados y cuántos frijolitos lleva cada tablero, y avisa cuando alguien valida una
+        Lotería. En modo local esa sección queda esperando datos: no hay nadie en la Nube todavía.</p>
 
       <h3>Botones del menú principal</h3>
       <ul>
         <li><b>Jugar:</b> inicia o retoma la partida.</li>
-        <li><b>Ver tableros:</b> muestra los 30 tableros del juego.</li>
-        <li><b>Álbum de cartas:</b> las 54 cartas; toca una para escucharla en mazahua.</li>
+        <li><b>Ver tableros:</b> muestra los 30 tableros del juego; toca uno para verlo en grande.</li>
+        <li><b>Álbum de cartas:</b> las 54 cartas; toca una para escucharla en mazahua y verla en grande.</li>
         <li><b>Audio mazahua:</b> activa el sonido y repite la última carta.</li>
         <li><b>Compartir:</b> envía el enlace del juego.</li>
         <li><b>Cómo ganar:</b> resumen de las reglas.</li>
@@ -132,7 +174,8 @@
         <li>Sube el volumen o usa audífonos: el audio en mazahua es la pista principal.</li>
         <li>Marca solo cuando estés seguro; puedes desmarcar tocando de nuevo la carta.</li>
         <li>Si se corta la conexión, la página reintenta sola y retoma la partida.</li>
-        <li>En el modo demo las marcas se guardan solo en tu navegador y no se valida la Lotería.</li>
+        <li>Si el Dispositivo no logra conectarse a internet, revisa la contraseña y confirma que la
+          red sea de 2.4 GHz. Mientras tanto, el juego local sigue funcionando igual.</li>
       </ul>
 
       <div class="tip">
